@@ -20,6 +20,14 @@
         >
         </el-date-picker>
       </el-form-item>
+      <el-form-item label="End Date">
+        <el-date-picker
+          v-model="model.endDate"
+          type="date"
+          placeholder="默认根据时长计算"
+        >
+        </el-date-picker>
+      </el-form-item>
       <el-form-item label="Duration">
         <el-radio-group v-model="model.duration">
           <el-radio-button label="1月">1 Month</el-radio-button>
@@ -41,7 +49,7 @@
 
 <script>
 import format from "date-format";
-import calcDate from "../calcDate";
+import calcDate from "../methods/calcDate";
 export default {
   props: {
     id: {},
@@ -56,7 +64,10 @@ export default {
     async save() {
       if (this.id) {
         // put request
-        await this.$http.put(`/user/${this.id}`, this.model);
+        await this.$http.put(
+          `/rest/users/${this.id}`,
+          this.formatModel(this.model, "update")
+        );
         this.$toasted.show("Updated!!", {
           theme: "toasted-primary",
           position: "top-right",
@@ -64,28 +75,45 @@ export default {
         });
       } else {
         // post request
-        await this.$http.post("/user", this.formatModel(this.model));
+        await this.$http.post(
+          "/rest/users",
+          this.formatModel(this.model, "add")
+        );
         this.$toasted.show("Added!!", {
           theme: "toasted-primary",
           position: "top-right",
           duration: 1000,
         });
       }
-      this.$router.push("/user");
+      this.$router.push("/users");
     },
     async fetch() {
-      const model = await this.$http.get(`user/${this.id}`);
+      const model = await this.$http.get(`/rest/users/${this.id}`);
       this.model = model.data;
     },
     async fetchNo() {
-      const model = await this.$http.get(`user`);
+      const model = await this.$http.get(`/rest/users`);
       this.$set(this.model, "no", model.data.length + 1);
     },
-    formatModel(model) {
+    formatModel(model, cfg) {
       let copy = model;
-      copy.no = "gm" + copy.no;
-      copy.purchaseOnDate = format.asString("yyyy.MM.dd", copy.purchaseOnDate);
-      copy.endDate = calcDate.AddDuration(copy.purchaseOnDate, copy.duration);
+      window.console.log(copy);
+      if (cfg == "add") {
+        copy.no = "gm" + copy.no;
+      }
+      if (copy.purchaseOnDate instanceof Date) {
+        copy.purchaseOnDate = format.asString(
+          "yyyy.MM.dd",
+          copy.purchaseOnDate
+        );
+      }
+      if (!copy.endDate) {
+        copy.endDate = calcDate.AddDuration(copy.purchaseOnDate, copy.duration);
+      } else {
+        if (copy.endDate instanceof Date) {
+          copy.endDate = format.asString("yyyy.MM.dd", copy.endDate);
+        }
+      }
       return copy;
     },
     watchPaid() {

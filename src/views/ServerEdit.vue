@@ -18,6 +18,9 @@
       <el-form-item label="Subs" style="width:50vw">
         <el-input v-model="model.subs"></el-input>
       </el-form-item>
+      <el-form-item label="Note" style="width:50vw">
+        <el-input v-model="model.note"></el-input>
+      </el-form-item>
       <el-form-item label="Users">
         <el-select
           v-model="model.users"
@@ -59,7 +62,7 @@ export default {
     async save() {
       if (this.id) {
         // put request
-        await this.$http.put(`/server/${this.id}`, this.model);
+        await this.$http.put(`/rest/servers/${this.id}`, this.model);
         this.$toasted.show("Updated!!", {
           theme: "toasted-primary",
           position: "top-right",
@@ -67,25 +70,25 @@ export default {
         });
       } else {
         // post request
-        await this.$http.post("/server", this.model);
+        await this.$http.post("/rest/servers", this.model);
         this.$toasted.show("Added!!", {
           theme: "toasted-primary",
           position: "top-right",
           duration: 1000,
         });
       }
-      this.$router.push("/server");
+      this.$router.push("/servers");
     },
     async fetch() {
-      const res = await this.$http.get(`server/${this.id}`);
+      const res = await this.$http.get(`rest/servers/${this.id}`);
       this.model = res.data;
     },
     async fetchNo() {
-      const model = await this.$http.get(`server`);
+      const model = await this.$http.get(`rest/servers`);
       this.$set(this.model, "no", model.data.length + 1);
     },
     async getUsers() {
-      const users = await this.$http.get("user");
+      const users = await this.$http.get("rest/users");
       this.users = users.data;
     },
   },

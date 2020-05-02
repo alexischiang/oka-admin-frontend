@@ -5,7 +5,9 @@ import ServerEdit from "./views/ServerEdit.vue";
 import ServerList from "./views/ServerList.vue";
 import UserEdit from "./views/UserEdit.vue";
 import UserList from "./views/UserList.vue";
+import ChartMain from "./views/ChartMain.vue";
 
+import MobileMain from "./mobile-views/Main.vue";
 Vue.use(Router);
 
 export default new Router({
@@ -16,32 +18,42 @@ export default new Router({
       component: Main,
       children: [
         {
-          path: "/server/edit",
-          component: ServerEdit
-        },
-        {
-          path: "/server/edit/:id",
+          path: "/servers/edit",
           component: ServerEdit,
-          props: true
         },
         {
-          path: "/server",
-          component: ServerList
+          path: "/servers/edit/:id",
+          component: ServerEdit,
+          props: true,
         },
         {
-          path: "/user/edit",
-          component: UserEdit
+          path: "/servers",
+          component: ServerList,
         },
         {
-          path: "/user/edit/:id",
+          path: "/users/edit",
           component: UserEdit,
-          props: true
         },
         {
-          path: "/user",
-          component: UserList
-        }
-      ]
-    }
-  ]
+          path: "/users/edit/:id",
+          component: UserEdit,
+          props: true,
+        },
+        {
+          path: "/users",
+          component: UserList,
+        },
+        {
+          path: "/chart",
+          component: ChartMain,
+        },
+      ],
+    },
+    {
+      path: "/mobile",
+      name: "mobile-main",
+      component: MobileMain,
+      children: [],
+    },
+  ],
 });

@@ -1,5 +1,6 @@
 import Vue from "vue";
 import App from "./App.vue";
+
 import "./plugins/element.js";
 import router from "./router";
 
@@ -9,9 +10,16 @@ Vue.prototype.$http = http;
 import Toasted from "vue-toasted";
 Vue.use(Toasted);
 
+import vchart from "v-charts";
+Vue.use(vchart);
+
+import Vant from "vant";
+import './plugins/vant.js'
+Vue.use(Vant);
+
 Vue.config.productionTip = false;
 
 new Vue({
   router,
-  render: h => h(App)
+  render: (h) => h(App),
 }).$mount("#app");
