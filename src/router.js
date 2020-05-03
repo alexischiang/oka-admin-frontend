@@ -8,6 +8,8 @@ import UserList from "./views/UserList.vue";
 import ChartMain from "./views/ChartMain.vue";
 
 import MobileMain from "./mobile-views/Main.vue";
+import MobileServerList from "./mobile-views/ServerList.vue";
+import MobileUserList from "./mobile-views/UserList.vue";
 Vue.use(Router);
 
 export default new Router({
@@ -53,7 +55,16 @@ export default new Router({
       path: "/mobile",
       name: "mobile-main",
       component: MobileMain,
-      children: [],
+      children: [
+        {
+          path: "/mobile/servers",
+          component: MobileServerList,
+        },
+        {
+          path: "/mobile/users",
+          component: MobileUserList,
+        },
+      ],
     },
   ],
 });

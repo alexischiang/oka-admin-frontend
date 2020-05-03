@@ -13,9 +13,7 @@ Vue.use(Toasted);
 import vchart from "v-charts";
 Vue.use(vchart);
 
-import Vant from "vant";
-import './plugins/vant.js'
-Vue.use(Vant);
+import "./plugins/vant.js";
 
 Vue.config.productionTip = false;
 

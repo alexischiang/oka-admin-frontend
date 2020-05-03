@@ -1,10 +1,14 @@
 <template>
   <div class="mobile-main">
-    <van-tabbar v-model="active">
-      <van-tabbar-item icon="home-o">标签</van-tabbar-item>
-      <van-tabbar-item icon="search">标签</van-tabbar-item>
-      <van-tabbar-item icon="friends-o">标签</van-tabbar-item>
-      <van-tabbar-item icon="setting-o">标签</van-tabbar-item>
+    <router-view></router-view>
+    <van-tabbar v-model="active" route>
+      <van-tabbar-item icon="desktop-o" to="/mobile/servers"
+        >服务器</van-tabbar-item
+      >
+      <van-tabbar-item icon="vip-card-o" to="/mobile/users"
+        >用户</van-tabbar-item
+      >
+      <van-tabbar-item icon="setting-o">设置</van-tabbar-item>
     </van-tabbar>
   </div>
 </template>

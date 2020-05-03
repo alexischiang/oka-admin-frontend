@@ -110,7 +110,6 @@ export default {
         `${value.split(".")[0]}.(0)?${value.split(".")[1]}`,
         "g"
       );
-      this.test = reg;
       return reg.test(row[property]);
     },
     showRenewal(item) {
